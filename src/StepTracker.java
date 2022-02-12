@@ -2,8 +2,8 @@ import java.sql.SQLOutput;
 import java.util.HashMap;
 
 public class StepTracker {
-    HashMap<Integer, MonthData> monthToData = new HashMap<>();
-    int target = 10000;
+    private HashMap<Integer, MonthData> monthToData = new HashMap<>();
+    private int target = 10000;
 
     public StepTracker() {
         for (int i = 0; i < 12; i++) {
@@ -11,15 +11,16 @@ public class StepTracker {
         }
     }
 
-    class MonthData {
-        int[] stepsPerMonth = new int[30];
+    private static class MonthData {
+        private int[] stepsPerMonth = new int[30];
+
 
         void addStepsPerDay(int day, int steps) {
             stepsPerMonth[(day)] = steps;
         }
     }
 
-    class Converter {
+    private static class Converter {
         int steps;
 
         Converter(int steps) {
@@ -50,12 +51,17 @@ public class StepTracker {
         return steps;
     }
 
+    int stepsInDay(int numOfMonth, int day) {
+        return showStepsPerEachDay(numOfMonth).stepsPerMonth[day - 1];
+    }
+
     int getSumOfSteps(int numOfMonth) {
         int sum = 0;
         for (int i = 1; i < 30; i++) {
             sum = sum + showStepsPerEachDay(numOfMonth).stepsPerMonth[i - 1];
-           // steps.stepsPerMonth[i - 1];
-        } return sum;
+            // steps.stepsPerMonth[i - 1];
+        }
+        return sum;
     }
 
     int getMaxSteps(int numOfMonth) {
@@ -64,7 +70,8 @@ public class StepTracker {
             if (showStepsPerEachDay(numOfMonth).stepsPerMonth[i - 1] > max) {
                 max = showStepsPerEachDay(numOfMonth).stepsPerMonth[i - 1];
             }
-        } return max;
+        }
+        return max;
     }
 
     double getAvarageSteps(int numOfMonth) {
@@ -76,13 +83,13 @@ public class StepTracker {
         return avarageSteps;
     }
 
-    double getDistance (int sum) {
+    double getDistance(int sum) {
         Converter converter = new Converter(sum);
         double distance = converter.getDistance();
         return distance;
     }
 
-    double getKkal (int sum) {
+    double getKkal(int sum) {
         Converter converter = new Converter(sum);
         double kKal = converter.getKkal();
         return kKal;
@@ -100,25 +107,27 @@ public class StepTracker {
             if (maxCounter > bestSeries) {
                 bestSeries = maxCounter;
             }
-        } return bestSeries;
-    }
-       /*
-        int counter = 0;
-        int maxCounter = 0;
-        int bestSeries = 0;
-        for (int i = 1; i < 30; i++) {
-            if (steps.stepsPerMonth[i - 1] >= target) {
-                counter = counter + 1;
-                maxCounter = counter;
-            } else counter = 0;
-            if (maxCounter > bestSeries) {
-                bestSeries = maxCounter;
-            }
         }
-
-        System.out.println("Лучшая серия: " + bestSeries + " дней");
+        return bestSeries;
     }
-        */
+
+    /*
+     int counter = 0;
+     int maxCounter = 0;
+     int bestSeries = 0;
+     for (int i = 1; i < 30; i++) {
+         if (steps.stepsPerMonth[i - 1] >= target) {
+             counter = counter + 1;
+             maxCounter = counter;
+         } else counter = 0;
+         if (maxCounter > bestSeries) {
+             bestSeries = maxCounter;
+         }
+     }
+
+     System.out.println("Лучшая серия: " + bestSeries + " дней");
+ }
+     */
     void changeTarget(int wantedSteps) {
         target = wantedSteps;
     }

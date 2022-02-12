@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -21,7 +22,9 @@ public class Main {
                     if ((numOfMonth > 0) && (numOfMonth < 13)) {
                         month = numOfMonth;
                         break;
-                    } else System.out.println("Ошибка ввода. Выберите номер месяца от 1 до 12");
+                    } else {
+                        System.out.println("Ошибка ввода. Выберите номер месяца от 1 до 12");
+                    }
                 }
                 while (true) {
                     System.out.println("Введите число месяца");
@@ -29,7 +32,9 @@ public class Main {
                     if ((dayOfMonth > 0) && (dayOfMonth < 31)) {
                         day = dayOfMonth;
                         break;
-                    } else System.out.println("Ошибка ввода. Введите число от 1 до 30");
+                    } else {
+                        System.out.println("Ошибка ввода. Введите число от 1 до 30");
+                    }
                 }
                 while (true) {
                     System.out.println("Введите кол-во шагов за число");
@@ -39,19 +44,23 @@ public class Main {
                         stepTracker.inputStepsCount(month, day, steps);
                         System.out.println("Данные записаны");
                         break;
-                    } else System.out.println("Ошибка ввода. Введите число больше нуля");
+                    } else {
+                        System.out.println("Ошибка ввода. Введите число больше нуля");
+                    }
                 }
             } else if (userInput == 2) {
                 while (true) {
                     System.out.println("Укажите месяц, за который хотите получить статистику:");
                     listOfMonth();
                     int numOfMonth = scanner.nextInt();
-                    if((numOfMonth > 0) && (numOfMonth < 13)) {
+                    if ((numOfMonth > 0) && (numOfMonth < 13)) {
                         System.out.println("Кол-во пройденных шагов по дням:");
                         for (int i = 1; i < 30; i++) {
-                            System.out.print(i + " день: " + stepTracker.showStepsPerEachDay(numOfMonth).stepsPerMonth[i - 1] + ", ");
+                            //System.out.print(i + " день: " + stepTracker.showStepsPerEachDay(numOfMonth).stepsPerMonth[i - 1] + ", ");
+                            System.out.print(i + " день: " + stepTracker.stepsInDay(numOfMonth, i) + ", ");
                         }
-                        System.out.println(30 + " день: " + stepTracker.showStepsPerEachDay(numOfMonth).stepsPerMonth[29]);
+                        //System.out.println(30 + " день: " + stepTracker.showStepsPerEachDay(numOfMonth).stepsPerMonth[29]);
+                        System.out.println(30 + " день: " + stepTracker.stepsInDay(numOfMonth, 29));
                         System.out.println("Общее кол-во щагов за месяц: " + stepTracker.getSumOfSteps(numOfMonth) + " шагов");
                         System.out.println("Максимальное кол-во шагов в месяце: " + stepTracker.getMaxSteps(numOfMonth) + " шагов");
                         System.out.println("Среднее кол-во шагов за месяц: " + stepTracker.getAvarageSteps(numOfMonth) + " шагов в день");
@@ -60,7 +69,9 @@ public class Main {
                         System.out.println("Лучшая серия дней подряд: " + stepTracker.bestSeries(numOfMonth));
                         //stepTracker.showMonthStatistic(numOfMonth);
                         break;
-                    } else System.out.println("Ошибка ввода. Введите номер месяца от 1 до 12");
+                    } else {
+                        System.out.println("Ошибка ввода. Введите номер месяца от 1 до 12");
+                    }
                     // System.out.println("Общее кол-во шагов за месяц: "+ stepTracker.sumStepsForMonth(numOfMonth) + " шагов");
                     // System.out.println("Максимальное кол-во шагов в месяце: " + stepTracker.maxStepsForMonth(numOfMonth) + " шагов");
                 }
@@ -68,21 +79,23 @@ public class Main {
                 while (true) {
                     System.out.println("Укажите новую цель (кол-во шагов за день): ");
                     int targetSteps = scanner.nextInt();
-                    if(targetSteps > 0) {
+                    if (targetSteps > 0) {
                         stepTracker.changeTarget(targetSteps);
                         System.out.println("Новая цель записана: " + targetSteps + " шагов за день");
                         break;
-                    } else System.out.println("Ошибка ввода. Введите кол-во шагов больше нуля");
+                    } else {
+                        System.out.println("Ошибка ввода. Введите кол-во шагов больше нуля");
+                    }
                 }
             }
 
-             if (userInput < 0 || userInput > 3) {
-             System.out.println("Ошибка ввода. Выберите действие от 0 до 3");
-             }
+            if (userInput < 0 || userInput > 3) {
+                System.out.println("Ошибка ввода. Выберите действие от 0 до 3");
+            }
             printMenu(); // печатем меню ещё раз перед завершением предыдущего действия
             userInput = scanner.nextInt(); // повторное считывание данных от пользователя
         }
-            System.out.println("Программа завершена");
+        System.out.println("Программа завершена");
     }
 
     private static void printMenu() {
